@@ -6,8 +6,12 @@
 
     <groupId>com.cxl.cloud</groupId>
     <artifactId>spring-boot-cloud</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>com-cxl-elFinder</module>
+        <module>cloud</module>
+    </modules>
     <name>spring-boot-cloudDisk</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
