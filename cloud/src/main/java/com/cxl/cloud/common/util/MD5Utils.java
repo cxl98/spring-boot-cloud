@@ -12,10 +12,11 @@ public class MD5Utils {
      * @return String 返回十六进制字符串
      */
 
-    public static String hex(byte[] arr) {
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0, length = arr.length; i < length; ++i) {
-            sb.append(Integer.toHexString((arr[i] & 0xFF) | 0x100), 1, 3);
+    private static String hex(byte[] arr) {
+        StringBuilder sb;
+        sb = new StringBuilder();
+        for (byte anArr : arr) {
+            sb.append(Integer.toHexString((anArr & 0xFF) | 0x100), 1, 3);
         }
         return sb.toString();
     }
@@ -45,7 +46,8 @@ public class MD5Utils {
      */
     public static String getSaltMD5(String passWord) {
         Random random = new Random();
-        StringBuffer buffer = new StringBuffer(16);
+        StringBuffer buffer ;
+        buffer= new StringBuffer(16);
         buffer.append(random.nextInt(99999999)).append(random.nextInt(99999999));
         int len = buffer.length();
         if (len < 16) {
@@ -88,7 +90,7 @@ public class MD5Utils {
     public static void main(String[] args) {
         String plaintext = "admin";
         String hex = MD5Utils.getSaltMD5(plaintext);
-        System.out.println("加盐后的MD5" + hex);
+        System.out.println("加盐后的MD5： " + hex);
         boolean saltverifyMD5 = MD5Utils.getSalivaryMD5(plaintext, hex);
         System.out.println(saltverifyMD5);
     }
