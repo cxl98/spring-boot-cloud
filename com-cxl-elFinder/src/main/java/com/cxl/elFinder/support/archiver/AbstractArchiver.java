@@ -129,15 +129,71 @@ public abstract class AbstractArchiver implements Archiver {
      */
     @Override
     public Target decompress(Target target) throws IOException {
-        Target decompressTarget;
+        Target decompressTarget = null;
         final Volume volume = target.getVolume();
 
         //得到一个压缩目标信息
         final String src = target.toString();
         final String dest = removeExtension(src);
-        return null;
+
+
+        //打开一个流以读取压缩目标内容并自动关闭它
+        ArchiveInputStream archiveInputStream = null;
+        OutputStream bufferedOutputStream = null;
+        try {
+            archiveInputStream= createArchiveInputStream(new BufferedInputStream(volume.openInputStream(target)));
+
+            if (null != archiveInputStream) {
+                //创建解压缩目标信息
+                Path decompressDir = Paths.get(dest);
+
+                //创建一个新的解压缩文件夹，如果已经存在，则不覆盖该文件夹,不存在就覆盖他
+                decompressDir = createFile(false, decompressDir.getParent(), decompressDir);
+
+                //创建解压缩目标信息
+                decompressTarget = volume.fromPath(decompressDir.toString());
+
+                //如果目标文件夹不存在，则创建目标文件夹
+                volume.createFolder(decompressTarget);
+
+                //获取压缩目标列表
+                ArchiveEntry entry;
+                while (null != (entry = archiveInputStream.getNextEntry())) {
+                    if (archiveInputStream.canReadEntryData(entry)) {
+                        //获取列表的信息
+                        final String entryName = entry.getName();
+                        final Target target1 = volume.fromPath(Paths.get(decompressDir.toString(), entryName).toString());
+                        final Target parent = volume.getParent(target1);
+
+                        //如果父文件夹不存在，则创建这个文件夹
+                        if (null != parent && !volume.exists(parent)) {
+                            volume.createFolder(parent);
+                        }
+                        if (!entry.isDirectory()) {
+                            //打开一个流以读取压缩目标内容并自动关闭它
+                             bufferedOutputStream = new BufferedOutputStream(volume.openOutputStream(target));
+                            IOUtils.copy(archiveInputStream, bufferedOutputStream);
+                        }
+                    }
+                }
+            }
+        } finally {
+            if (null != archiveInputStream){
+                archiveInputStream.close();
+            }
+            if (null!=bufferedOutputStream){
+                bufferedOutputStream.close();
+            }
+        }
+        return decompressTarget;
     }
 
+    /**
+     * 从给定的压缩文件名中删除扩展名。
+     *
+     * @param name 压缩源名称
+     * @return 返回扩展名
+     */
     static String removeExtension(String name) {
         if (name == null) {
             return null;
@@ -147,6 +203,12 @@ public abstract class AbstractArchiver implements Archiver {
         }
     }
 
+    /**
+     * 定义压缩目标文件夹的格式
+     * @param target 压缩文件夹
+     * @param archiveOutputStream  outputstream
+     * @throws IOException 异常处理
+     */
     protected void compressDirectory(Target target, ArchiveOutputStream archiveOutputStream) throws IOException {
         Volume targetVolume = target.getVolume();
         Target[] targetChildrens = targetVolume.listChildren(target);
@@ -160,10 +222,24 @@ public abstract class AbstractArchiver implements Archiver {
         }
     }
 
+    /**
+     * 定义压缩目标文件的格式
+     *
+     * @param target              要在outpustream中写入的目标。
+     * @param archiveOutputStream 存档输出流
+     * @throws IOException 异常处理
+     */
     final void compressFile(Target target, ArchiveOutputStream archiveOutputStream) throws IOException {
         addTargetToArchiveOutputStream(target, archiveOutputStream);
     }
 
+    /**
+     * 增加一个目标到 outputstream流中
+     *
+     * @param target              要增加的目标
+     * @param archiveOutputStream 存档输出流;
+     * @throws IOException 异常处理
+     */
     private void addTargetToArchiveOutputStream(Target target, ArchiveOutputStream archiveOutputStream) throws IOException {
         Volume targetVolume = target.getVolume();
 
@@ -184,11 +260,17 @@ public abstract class AbstractArchiver implements Archiver {
                 targetInputStream.close();
             }
         }
-
-
     }
 
-    protected final Path createFile(boolean compressFile, Path parent, Path path) {
+    /**
+     * 创建一个文件
+     *
+     * @param compressFile 是否是压缩文件
+     * @param parent       父路径
+     * @param path         自己的路径
+     * @return
+     */
+    final Path createFile(boolean compressFile, Path parent, Path path) {
         Path archiveFile = path;
         if (Files.exists(archiveFile)) {
             String archiveName = getArchiveName() + count.getAndIncrement();
