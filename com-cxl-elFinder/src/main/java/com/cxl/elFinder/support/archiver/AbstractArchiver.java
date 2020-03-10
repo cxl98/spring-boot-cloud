@@ -13,8 +13,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.apache.commons.io.FilenameUtils.removeExtension;
-
 /**
  * 抽象Archiver定义了一些存档行为，这个类有一些
  * 通用的方法。这个类必须通过具体的存档来扩展
@@ -42,7 +40,7 @@ public abstract class AbstractArchiver implements Archiver {
      *
      * @param bufferedOutputStream the Outputstream.
      * @return 返回一个输出流
-     * @throws IOException  if something goes wrong.
+     * @throws IOException if something goes wrong.
      */
     public abstract ArchiveOutputStream createArchiveOutputStream(BufferedOutputStream bufferedOutputStream) throws IOException;
 
@@ -62,7 +60,7 @@ public abstract class AbstractArchiver implements Archiver {
     }
 
     /**
-     *.tar和.tgz使用的默认压缩实现
+     * .tar和.tgz使用的默认压缩实现
      *
      * @return 压缩后的存档目标
      */
@@ -90,18 +88,18 @@ public abstract class AbstractArchiver implements Archiver {
                     //如果您不希望出现这种行为，只需注释这一行
                     compressFile = createFile(true, compressFile.getFileName().getParent(), compressFile);
 
-                    compressTarget=targetVolume.fromPath(compressFile.toString());
+                    compressTarget = targetVolume.fromPath(compressFile.toString());
                     //打开流以写入压缩目标内容并自动关闭它
-                    outputStream=targetVolume.openOutputStream(compressTarget);
-                    bufferedOutputStream=new BufferedOutputStream(outputStream);
-                    archiveOutputStream=createArchiveOutputStream(bufferedOutputStream);
+                    outputStream = targetVolume.openOutputStream(compressTarget);
+                    bufferedOutputStream = new BufferedOutputStream(outputStream);
+                    archiveOutputStream = createArchiveOutputStream(bufferedOutputStream);
                 }
-                if (targetisFolder){
+                if (targetisFolder) {
                     //压缩目标文件夹
-                    compressDirectory(target,archiveOutputStream);
-                }else{
+                    compressDirectory(target, archiveOutputStream);
+                } else {
                     //压缩文件
-                    compressFile(target,archiveOutputStream);
+                    compressFile(target, archiveOutputStream);
                 }
 
             }
@@ -123,72 +121,81 @@ public abstract class AbstractArchiver implements Archiver {
     }
 
     /**
-     *.tar和.tgz使用的默认解压缩实现
+     * .tar和.tgz使用的默认解压缩实现
+     *
      * @param target the compress archive to decompress
-     * 以压缩存档为目标进行解压缩
+     *               以压缩存档为目标进行解压缩
      * @return 返回解压目标文件
      */
     @Override
     public Target decompress(Target target) throws IOException {
         Target decompressTarget;
-        final Volume volume=target.getVolume();
+        final Volume volume = target.getVolume();
 
         //得到一个压缩目标信息
-        final String src=target.toString();
-        final String dest=removeExtension(src)
+        final String src = target.toString();
+        final String dest = removeExtension(src);
         return null;
     }
 
-    protected  void compressDirectory(Target target, ArchiveOutputStream archiveOutputStream) throws IOException{
-        Volume targetVolume=target.getVolume();
-        Target[] targetChildrens=targetVolume.listChildren(target);
+    static String removeExtension(String name) {
+        if (name == null) {
+            return null;
+        } else {
+            int index = name.lastIndexOf('.');
+            return index == -1 ? name : name.substring(0, index);
+        }
+    }
 
-        for (Target targetChildren: targetChildrens) {
+    protected void compressDirectory(Target target, ArchiveOutputStream archiveOutputStream) throws IOException {
+        Volume targetVolume = target.getVolume();
+        Target[] targetChildrens = targetVolume.listChildren(target);
+
+        for (Target targetChildren : targetChildrens) {
             if (targetVolume.isFolder(targetChildren)) {
-                compressDirectory(targetChildren,archiveOutputStream);
-            }else{
-                compressFile(targetChildren,archiveOutputStream);
+                compressDirectory(targetChildren, archiveOutputStream);
+            } else {
+                compressFile(targetChildren, archiveOutputStream);
             }
         }
     }
 
-     final void compressFile(Target target, ArchiveOutputStream archiveOutputStream) throws IOException {
-        addTargetToArchiveOutputStream(target,archiveOutputStream);
-     }
+    final void compressFile(Target target, ArchiveOutputStream archiveOutputStream) throws IOException {
+        addTargetToArchiveOutputStream(target, archiveOutputStream);
+    }
 
     private void addTargetToArchiveOutputStream(Target target, ArchiveOutputStream archiveOutputStream) throws IOException {
-        Volume targetVolume=target.getVolume();
+        Volume targetVolume = target.getVolume();
 
-        InputStream targetInputStream= null;
+        InputStream targetInputStream = null;
         try {
             targetInputStream = targetVolume.openInputStream(target);
-            final long targetSize=targetVolume.getSize(target);
-            final byte[] targetContent=new byte[(int) targetSize];
-            final String targetPath=targetVolume.getPath(target);
-            ArchiveEntry entry=createArchiveEntry(targetPath,targetSize,targetContent);
+            final long targetSize = targetVolume.getSize(target);
+            final byte[] targetContent = new byte[(int) targetSize];
+            final String targetPath = targetVolume.getPath(target);
+            ArchiveEntry entry = createArchiveEntry(targetPath, targetSize, targetContent);
             archiveOutputStream.putArchiveEntry(entry);
-            IOUtils.copy(targetInputStream,archiveOutputStream);
+            IOUtils.copy(targetInputStream, archiveOutputStream);
             archiveOutputStream.closeArchiveEntry();
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             if (targetInputStream != null) {
                 targetInputStream.close();
             }
         }
 
 
-
     }
 
     protected final Path createFile(boolean compressFile, Path parent, Path path) {
-        Path archiveFile=path;
+        Path archiveFile = path;
         if (Files.exists(archiveFile)) {
-            String archiveName=getArchiveName()+count.getAndIncrement();
-            if (compressFile){
-                archiveName+=getExtension();
+            String archiveName = getArchiveName() + count.getAndIncrement();
+            if (compressFile) {
+                archiveName += getExtension();
             }
-            archiveFile=createFile(compressFile,parent,Paths.get(parent.toString(),archiveName));
+            archiveFile = createFile(compressFile, parent, Paths.get(parent.toString(), archiveName));
         }
         return archiveFile;
     }
