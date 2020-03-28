@@ -1,7 +1,5 @@
 package com.cxl.elFinder.support.nio;
 
-import org.hibernate.validator.constraints.EAN;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
