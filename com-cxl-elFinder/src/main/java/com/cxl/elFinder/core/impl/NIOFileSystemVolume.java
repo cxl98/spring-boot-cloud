@@ -147,6 +147,8 @@ public class NIOFileSystemVolume implements Volume {
         return NioSystem.isFolder(fromTarget(target));
     }
 
+
+
     @Override
     public boolean isRoot(Target target) throws IOException {
         return NioSystem.isSame(getRootDir(),fromTarget(target));
