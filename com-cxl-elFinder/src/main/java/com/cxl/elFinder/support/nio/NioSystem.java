@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class NioSystem {
-    private NioSystem() {
+    public NioSystem() {
         throw new AssertionError();
     }
 
@@ -28,7 +28,6 @@ public class NioSystem {
     public static boolean isFolder(Path path) {
         return Files.isDirectory(path);
     }
-
     public static void deleteFile(Path path) throws IOException {
         if (isFolder(path)) {
             Files.deleteIfExists(path);
