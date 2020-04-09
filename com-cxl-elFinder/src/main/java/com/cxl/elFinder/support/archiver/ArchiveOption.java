@@ -3,6 +3,7 @@ package com.cxl.elFinder.support.archiver;
 import com.alibaba.fastjson.JSONObject;
 
 public enum  ArchiveOption {
+
     INSTANCE;//实例
 
     public static JSONObject JSON_INSTANCE(){
