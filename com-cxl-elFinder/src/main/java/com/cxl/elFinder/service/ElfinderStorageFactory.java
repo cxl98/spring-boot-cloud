@@ -1,5 +1,5 @@
 package com.cxl.elFinder.service;
 
-public interface ElfinderStorageFactor {
+public interface ElfinderStorageFactory {
     ElfinderStorage getVolumeSource();
 }

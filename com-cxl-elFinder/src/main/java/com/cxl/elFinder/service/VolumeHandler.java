@@ -12,6 +12,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Volume 的处理器　主要有创建文件，删除文件等操作
+ */
 public class VolumeHandler implements Serializable {
     private static final long serialVersionUID = 8855615616525021L;
 
@@ -58,7 +61,9 @@ public class VolumeHandler implements Serializable {
     public long getLastModified() throws IOException {
         return volume.getLastModified(target);
     }
-
+    public String getMimeType() throws IOException {
+        return volume.getMimeType(target);
+    }
     public String getName() {
         return volume.getName(target);
     }
@@ -113,5 +118,32 @@ public class VolumeHandler implements Serializable {
 
     public boolean isReadable() {
         return this.volumeSecurity.getSecurityConstraint().isReadable();
+    }
+    public boolean isWritable() {
+        return this.volumeSecurity.getSecurityConstraint().isWritable();
+    }
+
+    public void renameTo(VolumeHandler dst) throws IOException {
+        volume.rename(target, dst.target);
+    }
+
+    public String getVolumeAlias() {
+        return volume.getAlias();
+    }
+
+    public Volume getVolume() {
+        return volume;
+    }
+
+    public Target getTarget() {
+        return target;
+    }
+
+    public VolumeSecurity getVolumeSecurity() {
+        return volumeSecurity;
+    }
+
+    public ElfinderStorage getElfinderStorage() {
+        return elfinderStorage;
     }
 }
