@@ -15,7 +15,7 @@ public class ReturnT extends HashMap<String,Object> {
         return fail(500,"请联系管理员");
     }
 
-    private static ReturnT fail(String msg) {
+    public static ReturnT fail(String msg) {
         return fail(500,msg);
     }
     public static ReturnT fail(int code, String msg){
