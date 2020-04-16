@@ -1,4 +1,4 @@
-package com.cxl.elFinder;
+package com.cxl.elFinder.utils;
 
 public class ElFinderConstansts {
     //回应常数
