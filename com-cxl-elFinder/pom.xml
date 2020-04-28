@@ -9,8 +9,14 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.cxl.cloud</groupId>
     <artifactId>com.cxl.elFinder</artifactId>
-
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <version>2.2.0.RELEASE</version>
+        </dependency>
+    </dependencies>
 
 </project>
