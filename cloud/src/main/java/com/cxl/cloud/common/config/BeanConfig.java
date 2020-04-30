@@ -24,11 +24,13 @@ public class BeanConfig {
     @Autowired
     private PropertiesConfig propertiesConfig;
 
+    @Autowired
+    private CommandFactoryImpl commandFactoryImpl;
+
     @Bean(name = "commandFactory")
     public CommandFactoryImpl getCommandFactory(){
-        CommandFactoryImpl commandFactory=new CommandFactoryImpl();
-        commandFactory.setClassNamePattern(propertiesConfig.getCommand()+".%Command");
-        return commandFactory;
+        commandFactoryImpl.setClassNamePattern(propertiesConfig.getCommand()+".%sCommand");
+        return commandFactoryImpl;
     }
 
     @Bean(name = "storageFactory")
@@ -47,7 +49,7 @@ public class BeanConfig {
         thumbnailWith.setThumbnailWidth(propertiesConfig.getThumbnail().getWith().intValue());
 
         // creates volumes, volumeIds, volumeLocale and volumeSecurities
-        Character id='A';
+        char id='A';
         List<Node> elfinderConfigurationVolumes=propertiesConfig.getVolumes();
 
         List<Volume> volumes=new ArrayList<>(elfinderConfigurationVolumes.size());
