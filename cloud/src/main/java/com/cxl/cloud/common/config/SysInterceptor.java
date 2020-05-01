@@ -14,7 +14,7 @@ public class SysInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if (handler instanceof HandlerMethod) {
-            SysUser user = (SysUser) request.getSession().getAttribute("usr");
+            SysUser user = (SysUser) request.getSession().getAttribute("user");
             if (user == null) {
                 response.sendRedirect("/");
                 return false;
@@ -25,5 +25,5 @@ public class SysInterceptor implements HandlerInterceptor {
         return true;
 
     }
-    
+
 }
