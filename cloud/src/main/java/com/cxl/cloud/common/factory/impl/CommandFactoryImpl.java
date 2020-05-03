@@ -1,13 +1,14 @@
 package com.cxl.cloud.common.factory.impl;
 
+import com.cxl.cloud.common.cache.GenericCache;
 import com.cxl.cloud.common.factory.CommandFactory;
 import com.cxl.elFinder.command.ElFinderCommand;
-import com.cxl.elFinder.support.concurrency.GenericCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.concurrent.ExecutionException;
-
+@Configuration
 public class CommandFactoryImpl implements CommandFactory {
     private static final Logger LOGGER= LoggerFactory.getLogger(CommandFactory.class);
 
