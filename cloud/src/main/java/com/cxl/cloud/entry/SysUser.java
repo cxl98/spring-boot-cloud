@@ -21,6 +21,9 @@ public class SysUser {
     private Timestamp gmtUpdate;
     private Integer userCreate;
 
+    public SysUser() {
+    }
+
     public SysUser(Integer id, String username, String password, String email, String roleCode, String roleName) {
         this.id = id;
         this.username = username;
@@ -124,4 +127,19 @@ public class SysUser {
         this.gmtUpdate = gmtUpdate;
     }
 
+    @Override
+    public String toString() {
+        return "SysUser{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", email='" + email + '\'' +
+                ", roleCode='" + roleCode + '\'' +
+                ", roleName='" + roleName + '\'' +
+                ", gmtCreate=" + gmtCreate +
+                ", gmtUpdate=" + gmtUpdate +
+                ", userCreate=" + userCreate +
+                '}';
+    }
 }

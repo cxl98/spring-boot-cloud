@@ -5,11 +5,11 @@ import java.util.Map;
 
 public class ReturnT extends HashMap<String,Object> {
     private static final long serialVersionUID=108L;
-    private int code;
-    private String msg;
+
     public ReturnT(){
         put("code",0);
     }
+
 
     public static ReturnT fail(){
         return fail(500,"请联系管理员");
