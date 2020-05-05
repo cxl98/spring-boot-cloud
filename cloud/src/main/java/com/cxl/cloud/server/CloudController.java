@@ -1,7 +1,7 @@
 package com.cxl.cloud.server;
 
+import com.cxl.cloud.common.factory.CommandFactory;
 import com.cxl.elFinder.command.ElFinderCommand;
-import com.cxl.elFinder.command.ElfinderCommandFactor;
 import com.cxl.elFinder.core.ElFinderContext;
 import com.cxl.elFinder.service.ElfinderStorageFactory;
 import com.cxl.elFinder.utils.ElFinderConstansts;
@@ -11,6 +11,8 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,10 +37,10 @@ public class CloudController {
     private static final Logger LOGGER = LoggerFactory.getLogger(CloudController.class);
     private static final String OPEN_STREAM = "openStream";
     private static final String PARAMETER = "getParameter";
-    @Resource(name = "commandFactory")
-    private ElfinderCommandFactor elfinderCommandFactor;
+    @Autowired
+    private CommandFactory commandFactory;
 
-    @Resource(name = "storageFactory")
+    @Autowired
     private ElfinderStorageFactory elfinderStorageFactory;
 
     @RequestMapping
@@ -47,7 +49,7 @@ public class CloudController {
         request = process(request);
 
         String cmd=request.getParameter(ElFinderConstansts.ELFINDER_PARAMETER_COMMAND);
-        ElFinderCommand elFinderCommand=elfinderCommandFactor.get(cmd);
+        ElFinderCommand elFinderCommand=commandFactory.get(cmd);
         final HttpServletRequest protectedRequest=request;
         try {
             elFinderCommand.execute(new ElFinderContext() {
@@ -162,3 +164,4 @@ public class CloudController {
         };
     }
 }
+
