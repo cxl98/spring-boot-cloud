@@ -7,7 +7,7 @@ public class Node {
     private String source;
     private String alias;
     private String path;
-    private boolean _default;
+    private Boolean defaults;
     private String locale;
     private Constraint constraint;
 }
