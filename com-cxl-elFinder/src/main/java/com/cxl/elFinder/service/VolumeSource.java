@@ -1,6 +1,6 @@
 package com.cxl.elFinder.service;
 
-import com.cxl.elFinder.config.ElFinderConfigurationUtils;
+import com.cxl.elFinder.utils.ElFinderConfigurationUtils;
 import com.cxl.elFinder.core.Volume;
 import com.cxl.elFinder.core.VolumeBuilder;
 import com.cxl.elFinder.core.impl.NIOFileSystemVolume;

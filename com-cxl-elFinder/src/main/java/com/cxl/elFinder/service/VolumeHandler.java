@@ -1,6 +1,6 @@
 package com.cxl.elFinder.service;
 
-import com.cxl.elFinder.ElFinderConstansts;
+import com.cxl.elFinder.utils.ElFinderConstansts;
 import com.cxl.elFinder.core.Target;
 import com.cxl.elFinder.core.Volume;
 import com.cxl.elFinder.core.VolumeSecurity;
