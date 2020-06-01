@@ -11,13 +11,13 @@ import java.util.List;
 
 public class PathTest {
     public static void main(String[] args) throws IOException {
-        Path path = Paths.get("/home/cxl/cxl/test");
-        NioSystem.createFolder(path);
-        NioSystem.createFile(Paths.get("/home/cxl/cxl/test/11.txt"));
-
-        boolean same = NioSystem.isSame(path, Paths.get("/home/cxl/cxl/test"));
-        System.out.println(same
-        );
+//        Path path = Paths.get("/home/cxl/cxl/test");
+//        NioSystem.createFolder(path);
+//        NioSystem.createFile(Paths.get("/home/cxl/cxl/test/11.txt"));
+//
+//        boolean same = NioSystem.isSame(path, Paths.get("/home/cxl/cxl/test"));
+//        System.out.println(same
+//        );
 //        OutputStream outputStream = NioSystem.openOutputStream(Paths.get("/home/cxl/cxl/test/11.txt"));
 //        String s="你好";
 //        outputStream.write(s.getBytes("UTF-8"));
@@ -35,6 +35,7 @@ public class PathTest {
 //            System.out.println(path1.toString());
 //        }
 
-
+        Path path1 = Paths.get(System.getProperty("user.home"));
+        System.out.println(path1.toString());
     }
 }

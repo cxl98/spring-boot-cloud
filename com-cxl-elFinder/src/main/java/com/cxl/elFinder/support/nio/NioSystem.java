@@ -25,13 +25,14 @@ public class NioSystem {
         }
     }
 
+    public static void deleteFile(Path path) throws IOException {
+        if (!isFolder(path)) {
+            boolean b = Files.deleteIfExists(path);
+            System.out.println("delete--------"+b);
+        }
+    }
     public static boolean isFolder(Path path) {
         return Files.isDirectory(path);
-    }
-    public static void deleteFile(Path path) throws IOException {
-        if (isFolder(path)) {
-            Files.deleteIfExists(path);
-        }
     }
 
     public static void deleteFolder(Path path) throws IOException {

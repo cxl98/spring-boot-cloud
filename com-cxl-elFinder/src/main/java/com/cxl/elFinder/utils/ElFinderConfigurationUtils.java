@@ -1,4 +1,4 @@
-package com.cxl.elFinder.config;
+package com.cxl.elFinder.utils;
 
 import java.net.URI;
 
