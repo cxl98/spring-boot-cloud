@@ -16,8 +16,7 @@ public class PathTest {
 //        NioSystem.createFile(Paths.get("/home/cxl/cxl/test/11.txt"));
 //
 //        boolean same = NioSystem.isSame(path, Paths.get("/home/cxl/cxl/test"));
-//        System.out.println(same
-//        );
+//        System.out.println(same);
 //        OutputStream outputStream = NioSystem.openOutputStream(Paths.get("/home/cxl/cxl/test/11.txt"));
 //        String s="你好";
 //        outputStream.write(s.getBytes("UTF-8"));
