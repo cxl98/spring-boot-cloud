@@ -96,7 +96,7 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
 <<<<<<< HEAD
-            <version>5.1.47</version>
+            <version>8.0.16</version>
 =======
             <version>8.0.16</version>
 >>>>>>> 9e674c949047e857516405bf511d169fd491bbf2
