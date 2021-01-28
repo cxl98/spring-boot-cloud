@@ -9,16 +9,19 @@ public class IndexController {
 
     @RequestMapping("{url}.shtml")
     public String page(@PathVariable("url") String url) {
+        System.out.println(url);
         return url;
     }
 
     @RequestMapping("{module}/{url}.shtml")
     public String page(@PathVariable("module") String module, @PathVariable("url") String url) {
+        System.out.println(module + "/" + url);
         return module + "/" + url;
     }
 
     @RequestMapping("{module}/{sub}/{url}.shtml")
     public String page(@PathVariable("module") String module, @PathVariable("sub") String sub, @PathVariable("url") String url) {
+        System.out.println(module + "/" + sub + "/" + url);
         return module + "/" + sub + "/" + url;
     }
 }

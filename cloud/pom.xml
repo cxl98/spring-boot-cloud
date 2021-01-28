@@ -20,10 +20,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-<<<<<<< HEAD
-=======
-            <version>2.2.0.RELEASE</version>
->>>>>>> 9e674c949047e857516405bf511d169fd491bbf2
         </dependency>
     </dependencies>
 </project>
