@@ -5,13 +5,6 @@
 	<title>私有云网盘</title>
 	<meta name="viewport" content="width=device-width,user-scalable=no"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<<<<<<< HEAD
-=======
-	<meta name="keywords" content="私有云网盘"/>
-	<meta name="description" content="世界上最好的私有云网盘"/>
-	<meta name="author" content="小柒2012" />
-	<meta name="site" content="https://blog.52itstyle.vip" />
->>>>>>> 9e674c949047e857516405bf511d169fd491bbf2
 	<link rel="stylesheet" th:href="@{/iview/styles/iview.css}">
     <link rel="icon" type="image/png" th:href="@{assets/i/favicon.png}">
     <link rel="apple-touch-icon-precomposed" href="@{assets/i/app-icon72x72@2x.png}">
@@ -44,12 +37,6 @@
 						<input type="password"   v-model="password"   id="doc-ipt-pwd-1" placeholder="设置个密码吧">
 					</div>
 					<p><button type="button"  @click="login" class="am-btn am-btn-default">登录</button></p>
-<<<<<<< HEAD
-=======
-					<!--<div align="center">-->
-						<!--<img  src="https://blog.52itstyle.vip/usr/uploads/2017/07/1801066129.jpg"/>-->
-					<!--</div>-->
->>>>>>> 9e674c949047e857516405bf511d169fd491bbf2
 				</fieldset>
 			</form>
 
@@ -86,23 +73,18 @@
 					    url: "user/login",
 					    data: data,
 					    dataType: "json",
-					    success: function(result){
-<<<<<<< HEAD
+					    success: function(result) {
 							console.log("xxxx")
-							if(result.code === 0){//登录成功
-								console.log(result)
-=======
-							if(result.code == 0){//登录成功
->>>>>>> 9e674c949047e857516405bf511d169fd491bbf2
-								parent.location.href ='index.shtml';
-							}else{
-								self.$Notice.warning({
-									title: '友情提醒',
-									desc: '为了防止恶意上传，请扫描二维码关注公众号回复私有网盘获取账号密码'
-								});
+								if (result.code == 0) {//登录成功
+									parent.location.href = 'index.shtml';
+								} else {
+									self.$Notice.warning({
+										title: '友情提醒',
+										desc: '为了防止恶意上传，请扫描二维码关注公众号回复私有网盘获取账号密码'
+									});
+								}
 							}
-						}
-					});
+						});
 				},
 			},
 
