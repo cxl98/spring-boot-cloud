@@ -1,14 +1,15 @@
 package com.cxl.cloud.server;
 
-import com.cxl.cloud.common.util.MD5Utils;
 import com.cxl.cloud.common.util.ReturnT;
 import com.cxl.cloud.dao.UserDao;
 import com.cxl.cloud.entry.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.nio.charset.StandardCharsets;
 
 @RestController
 @RequestMapping("user")
@@ -24,7 +25,7 @@ public class UserController {
         User user = userDao.selectUserByUsername(username);
         if (null!=user){
             System.out.println("xxxx");
-            if (MD5Utils.getSalivaryMD5(password,user.getPassword())){
+            if (DigestUtils.md5Digest(user.getPassword().getBytes(StandardCharsets.UTF_8))==password.getBytes(StandardCharsets.UTF_8)){
                 request.getSession().setAttribute("user",user);
                 System.out.println(ReturnT.success());
                 return ReturnT.success();
