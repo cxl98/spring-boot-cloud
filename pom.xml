@@ -118,7 +118,7 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-compress</artifactId>
-            <version>1.19</version>
+            <version>1.21</version>
         </dependency>
 
         <!--Joda-Time — 面向 Java 应用程序的日期/时间库的替代选择-->
